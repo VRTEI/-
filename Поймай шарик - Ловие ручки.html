@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Поймай шарик: Ловкие ручки - Бесплатная онлайн игра на реакцию и скорость</title>
+    <meta name="description" content="Игра 'Поймай шарик: Ловкие ручки' - увлекательная онлайн игра на развитие реакции, координации и скорости. Ловите разноцветные шарики, улучшайте свои навыки и соревнуйтесь с друзьями. Идеально подходит для детей и взрослых, не требует скачивания!">
+    <meta name="keywords" content="поймай шарик, ловкие ручки, онлайн игра, игра на реакцию, развивающая игра, игра на скорость, бесплатная игра, игра для детей, игра для взрослых, аркадная игра, игра на координацию">
+    <meta name="author" content="Игры на реакцию">
+    <meta property="og:title" content="Поймай шарик: Ловкие ручки - Игра на развитие реакции">
+    <meta property="og:description" content="Развивайте скорость реакции и координацию в увлекательной игре 'Поймай шарик: Ловкие ручки'. Бесплатно, без регистрации!">
+    <meta property="og:type" content="website">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            text-align: center;
+        }
+        
+        .header {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            color: #4cc9f0;
+            text-shadow: 0 0 10px rgba(76, 201, 240, 0.5);
+        }
+        
+        .tagline {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #b8c1ec;
+            font-weight: 300;
+        }
+        
+        .seo-description {
+            background: rgba(76, 201, 240, 0.1);
+            border-left: 4px solid #4cc9f0;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: left;
+            border-radius: 0 10px 10px 0;
+            font-size: 1.1rem;
+            color: #e0e0e0;
+        }
+        
+        .seo-description h2 {
+            color: #4cc9f0;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .score-container, .time-container, .level-container {
+            flex: 1;
+        }
+        
+        .info-label {
+            font-size: 1.1rem;
+            color: #b8c1ec;
+            margin-bottom: 8px;
+        }
+        
+        .info-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #f72585;
+        }
+        
+        #game-area {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 2px solid #4cc9f0;
+        }
+        
+        .ball {
+            position: absolute;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.1s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .ball:hover {
+            transform: scale(1.05);
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        #start-btn {
+            background-color: #4cc9f0;
+            color: #16213e;
+        }
+        
+        #reset-btn {
+            background-color: #4361ee;
+            color: white;
+        }
+        
+        #start-btn:hover {
+            background-color: #3aa8cc;
+            transform: translateY(-3px);
+        }
+        
+        #reset-btn:hover {
+            background-color: #2a4fdb;
+            transform: translateY(-3px);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .feature-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: left;
+            transition: transform 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-card h3 {
+            color: #4cc9f0;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        .feature-card ul {
+            padding-left: 20px;
+            color: #b8c1ec;
+        }
+        
+        .feature-card li {
+            margin-bottom: 8px;
+        }
+        
+        .instructions {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+            text-align: left;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .instructions h3 {
+            color: #4cc9f0;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+        
+        .instructions-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .instructions-list ul {
+            padding-left: 20px;
+            line-height: 1.6;
+        }
+        
+        .instructions-list li {
+            margin-bottom: 12px;
+            color: #b8c1ec;
+            font-size: 1.1rem;
+        }
+        
+        .benefits-list ul {
+            padding-left: 20px;
+            line-height: 1.6;
+        }
+        
+        .benefits-list li {
+            margin-bottom: 12px;
+            color: #b8c1ec;
+            font-size: 1.1rem;
+        }
+        
+        .benefits-list strong {
+            color: #4cc9f0;
+        }
+        
+        .game-over {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            border-radius: 15px;
+            display: none;
+        }
+        
+        .game-over h2 {
+            font-size: 3rem;
+            color: #f72585;
+            margin-bottom: 20px;
+        }
+        
+        .game-over p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+        
+        .seo-footer {
+            margin-top: 40px;
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            text-align: left;
+            color: #b8c1ec;
+            font-size: 1rem;
+            line-height: 1.6;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .seo-footer h3 {
+            color: #4cc9f0;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .keyword {
+            background: rgba(76, 201, 240, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .instructions-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            #game-area {
+                height: 400px;
+            }
+            
+            .game-info {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            button {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Поймай шарик: Ловкие ручки</h1>
+            <p class="tagline">Развивайте скорость реакции, координацию и внимание в увлекательной онлайн игре!</p>
+            
+            <div class="seo-description">
+                <h2>Лучшая онлайн игра на реакцию и координацию движений</h2>
+                <p><strong>Поймай шарик: Ловкие ручки</strong> - это захватывающая браузерная игра, которая развивает скорость реакции, улучшает координацию движений и тренирует периферическое зрение. Идеально подходит для детей от 6 лет, подростков и взрослых, которые хотят улучшить свои когнитивные способности в игровой форме. Игра абсолютно бесплатна, не требует регистрации или скачивания дополнительного программного обеспечения.</p>
+            </div>
+        </header>
+        
+        <div class="game-info">
+            <div class="score-container">
+                <div class="info-label">Счёт</div>
+                <div id="score" class="info-value">0</div>
+            </div>
+            <div class="time-container">
+                <div class="info-label">Время</div>
+                <div id="timer" class="info-value">30</div>
+            </div>
+            <div class="level-container">
+                <div class="info-label">Уровень</div>
+                <div id="level" class="info-value">1</div>
+            </div>
+        </div>
+        
+        <div id="game-area">
+            <!-- Шарики будут появляться здесь -->
+            <div id="game-over" class="game-over">
+                <h2>Игра окончена!</h2>
+                <p>Ваш финальный счёт: <span id="final-score">0</span></p>
+                <button id="restart-btn">Играть снова</button>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button id="start-btn">Начать игру</button>
+            <button id="reset-btn">Сбросить игру</button>
+        </div>
+        
+        <div class="features">
+            <div class="feature-card">
+                <h3>Особенности игры</h3>
+                <ul>
+                    <li>Динамичный геймплей с постепенным усложнением</li>
+                    <li>Яркая графика и плавная анимация</li>
+                    <li>Система уровней и очков</li>
+                    <li>Таймер обратного отсчета для азарта</li>
+                    <li>Подходит для всех возрастов</li>
+                </ul>
+            </div>
+            
+            <div class="feature-card">
+                <h3>Польза для развития</h3>
+                <ul>
+                    <li>Улучшает скорость реакции и координацию</li>
+                    <li>Тренирует периферическое зрение</li>
+                    <li>Развивает концентрацию внимания</li>
+                    <li>Стимулирует когнитивные функции мозга</li>
+                    <li>Помогает снять стресс в игровой форме</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3>Как играть и польза для развития</h3>
+            <div class="instructions-content">
+                <div class="instructions-list">
+                    <h4>Правила игры:</h4>
+                    <ul>
+                        <li>Нажмите "Начать игру", чтобы запустить таймер</li>
+                        <li>Кликайте на появляющиеся шарики, чтобы зарабатывать очки</li>
+                        <li>Чем меньше шарик, тем больше очков вы получаете</li>
+                        <li>Каждые 10 очков повышают ваш уровень</li>
+                        <li>Игра длится 30 секунд. Постарайтесь набрать как можно больше очков!</li>
+                        <li>Используйте "Сбросить игру", чтобы начать заново</li>
+                    </ul>
+                </div>
+                
+                <div class="benefits-list">
+                    <h4>Почему "Ловкие ручки" полезны:</h4>
+                    <ul>
+                        <li><strong>Для детей:</strong> Развивает моторику, реакцию и концентрацию внимания</li>
+                        <li><strong>Для подростков:</strong> Улучшает координацию и периферическое зрение</li>
+                        <li><strong>Для взрослых:</strong> Тренирует когнитивные функции и снимает стресс</li>
+                        <li><strong>Для пожилых:</strong> Поддерживает мозговую активность и моторику рук</li>
+                        <li><strong>Для всех:</strong> Увлекательный способ провести время с пользой</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="seo-footer">
+            <h3>Поймай шарик: Ловкие ручки - Бесплатная развивающая онлайн игра</h3>
+            <p>Наша игра "Поймай шарик: Ловкие ручки" создана специально для развития скорости реакции и координации движений. Это идеальный выбор для родителей, которые ищут полезные развивающие игры для детей, а также для взрослых, желающих поддерживать свои когнитивные способности в тонусе. Игра работает прямо в браузере на любом устройстве - компьютере, ноутбуке, планшете или смартфоне. Регулярные игровые сессии помогут улучшить зрительно-моторную координацию, что полезно не только в играх, но и в повседневной жизни.</p>
+            
+            <p><strong>Ключевые преимущества:</strong> не требует установки, полностью бесплатна, подходит для всех возрастов, развивает полезные навыки, имеет простой и понятный интерфейс, работает на любых устройствах.</p>
+            
+            <div class="keywords">
+                <span class="keyword">игра на реакцию</span>
+                <span class="keyword">ловкие ручки игра</span>
+                <span class="keyword">поймай шарик онлайн</span>
+                <span class="keyword">развивающая игра для детей</span>
+                <span class="keyword">игра на координацию</span>
+                <span class="keyword">бесплатная онлайн игра</span>
+                <span class="keyword">игра на скорость реакции</span>
+                <span class="keyword">тренировка внимания</span>
+                <span class="keyword">игра для развития моторики</span>
+                <span class="keyword">аркадная игра браузерная</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Элементы DOM
+        const gameArea = document.getElementById('game-area');
+        const scoreElement = document.getElementById('score');
+        const timerElement = document.getElementById('timer');
+        const levelElement = document.getElementById('level');
+        const startButton = document.getElementById('start-btn');
+        const resetButton = document.getElementById('reset-btn');
+        const restartButton = document.getElementById('restart-btn');
+        const gameOverScreen = document.getElementById('game-over');
+        const finalScoreElement = document.getElementById('final-score');
+        
+        // Игровые переменные
+        let score = 0;
+        let timeLeft = 30;
+        let level = 1;
+        let gameActive = false;
+        let gameTimer;
+        let ballTimer;
+        let balls = [];
+        
+        // Цвета шариков
+        const ballColors = ['#f72585', '#4361ee', '#4cc9f0', '#7209b7', '#3a0ca3', '#2a9d8f', '#e9c46a', '#f4a261', '#e76f51'];
+        
+        // Начало игры
+        startButton.addEventListener('click', startGame);
+        
+        // Сброс игры
+        resetButton.addEventListener('click', resetGame);
+        
+        // Перезапуск игры
+        restartButton.addEventListener('click', () => {
+            gameOverScreen.style.display = 'none';
+            resetGame();
+            startGame();
+        });
+        
+        // Функция начала игры
+        function startGame() {
+            if (gameActive) return;
+            
+            gameActive = true;
+            startButton.disabled = true;
+            resetButton.disabled = true;
+            
+            // Сброс переменных
+            score = 0;
+            timeLeft = 30;
+            level = 1;
+            updateUI();
+            
+            // Очистка шариков
+            clearBalls();
+            
+            // Запуск таймеров
+            gameTimer = setInterval(updateTimer, 1000);
+            ballTimer = setInterval(createBall, 800);
+            
+            // Создать первый шарик
+            createBall();
+        }
+        
+        // Функция сброса игры
+        function resetGame() {
+            gameActive = false;
+            startButton.disabled = false;
+            resetButton.disabled = false;
+            
+            clearInterval(gameTimer);
+            clearInterval(ballTimer);
+            clearBalls();
+            
+            score = 0;
+            timeLeft = 30;
+            level = 1;
+            updateUI();
+            
+            gameOverScreen.style.display = 'none';
+        }
+        
+        // Функция обновления таймера
+        function updateTimer() {
+            timeLeft--;
+            timerElement.textContent = timeLeft;
+            
+            // Меняем цвет таймера, когда время заканчивается
+            if (timeLeft <= 10) {
+                timerElement.style.color = '#ff0000';
+                timerElement.style.animation = 'pulse 0.5s infinite alternate';
+            }
+            
+            if (timeLeft <= 0) {
+                endGame();
+            }
+        }
+        
+        // Функция окончания игры
+        function endGame() {
+            gameActive = false;
+            clearInterval(gameTimer);
+            clearInterval(ballTimer);
+            startButton.disabled = false;
+            resetButton.disabled = false;
+            
+            // Показать экран завершения игры
+            finalScoreElement.textContent = score;
+            gameOverScreen.style.display = 'flex';
+        }
+        
+        // Функция создания шарика
+        function createBall() {
+            if (!gameActive) return;
+            
+            // Определяем размер шарика в зависимости от уровня
+            const baseSize = 80;
+            const sizeVariation = Math.min(level * 5, 40);
+            const ballSize = Math.max(30, baseSize - Math.random() * sizeVariation);
+            
+            // Создаем элемент шарика
+            const ball = document.createElement('div');
+            ball.className = 'ball';
+            
+            // Случайная позиция
+            const maxX = gameArea.offsetWidth - ballSize;
+            const maxY = gameArea.offsetHeight - ballSize;
+            
+            const posX = Math.random() * maxX;
+            const posY = Math.random() * maxY;
+            
+            // Случайный цвет
+            const color = ballColors[Math.floor(Math.random() * ballColors.length)];
+            
+            // Настройка стиля шарика
+            ball.style.width = `${ballSize}px`;
+            ball.style.height = `${ballSize}px`;
+            ball.style.left = `${posX}px`;
+            ball.style.top = `${posY}px`;
+            ball.style.backgroundColor = color;
+            ball.style.background = `radial-gradient(circle at 30% 30%, ${color}, ${darkenColor(color, 30)})`;
+            
+            // Очки за этот шарик (чем меньше шарик, тем больше очков)
+            const ballPoints = Math.max(1, Math.floor(100 / ballSize) + level);
+            
+            // Сохраняем информацию о шарике
+            ball.dataset.points = ballPoints;
+            
+            // Добавляем обработчик клика
+            ball.addEventListener('click', () => {
+                if (!gameActive) return;
+                
+                // Увеличиваем счет
+                score += ballPoints;
+                
+                // Проверяем уровень
+                const newLevel = Math.floor(score / 10) + 1;
+                if (newLevel > level) {
+                    level = newLevel;
+                    // Увеличиваем скорость появления шариков
+                    clearInterval(ballTimer);
+                    const interval = Math.max(200, 800 - level * 50);
+                    ballTimer = setInterval(createBall, interval);
+                }
+                
+                // Обновляем интерфейс
+                updateUI();
+                
+                // Анимация при клике
+                ball.style.transform = 'scale(1.3)';
+                ball.style.opacity = '0.5';
+                
+                // Показываем очки
+                showPoints(ball, ballPoints);
+                
+                // Удаляем шарик через короткое время
+                setTimeout(() => {
+                    if (ball.parentNode) {
+                        ball.parentNode.removeChild(ball);
+                        // Удаляем из массива
+                        const index = balls.indexOf(ball);
+                        if (index > -1) {
+                            balls.splice(index, 1);
+                        }
+                    }
+                }, 200);
+            });
+            
+            // Добавляем шарик в игровую область и массив
+            gameArea.appendChild(ball);
+            balls.push(ball);
+            
+            // Автоматическое удаление шарика через 5 секунд
+            setTimeout(() => {
+                if (ball.parentNode && gameActive) {
+                    ball.parentNode.removeChild(ball);
+                    // Удаляем из массива
+                    const index = balls.indexOf(ball);
+                    if (index > -1) {
+                        balls.splice(index, 1);
+                    }
+                }
+            }, 5000);
+        }
+        
+        // Функция отображения заработанных очков
+        function showPoints(ball, points) {
+            const pointsElement = document.createElement('div');
+            pointsElement.textContent = `+${points}`;
+            pointsElement.style.position = 'absolute';
+            pointsElement.style.color = '#4cc9f0';
+            pointsElement.style.fontWeight = 'bold';
+            pointsElement.style.fontSize = '1.5rem';
+            pointsElement.style.left = '50%';
+            pointsElement.style.top = '50%';
+            pointsElement.style.transform = 'translate(-50%, -50%)';
+            pointsElement.style.pointerEvents = 'none';
+            pointsElement.style.zIndex = '10';
+            pointsElement.style.textShadow = '0 0 5px rgba(0,0,0,0.8)';
+            
+            ball.appendChild(pointsElement);
+            
+            // Анимация всплывания
+            let opacity = 1;
+            let top = 50;
+            const fadeInterval = setInterval(() => {
+                opacity -= 0.05;
+                top -= 2;
+                pointsElement.style.opacity = opacity;
+                pointsElement.style.top = `${top}%`;
+                
+                if (opacity <= 0) {
+                    clearInterval(fadeInterval);
+                    if (pointsElement.parentNode) {
+                        pointsElement.parentNode.removeChild(pointsElement);
+                    }
+                }
+            }, 50);
+        }
+        
+        // Функция очистки всех шариков
+        function clearBalls() {
+            // Удаляем все шарики из DOM
+            const balls = document.querySelectorAll('.ball');
+            balls.forEach(ball => {
+                if (ball.parentNode) {
+                    ball.parentNode.removeChild(ball);
+                }
+            });
+            
+            // Очищаем массив
+            balls.length = 0;
+        }
+        
+        // Функция обновления интерфейс
+        function updateUI() {
+            scoreElement.textContent = score;
+            levelElement.textContent = level;
+            
+            // Меняем цвет счета в зависимости от уровня
+            if (level >= 5) {
+                scoreElement.style.color = '#f72585';
+            } else if (level >= 3) {
+                scoreElement.style.color = '#ff9e00';
+            } else {
+                scoreElement.style.color = '#4cc9f0';
+            }
+        }
+        
+        // Вспомогательная функция для затемнения цвета
+        function darkenColor(color, percent) {
+            const num = parseInt(color.slice(1), 16);
+            const amt = Math.round(2.55 * percent);
+            const R = (num >> 16) - amt;
+            const G = (num >> 8 & 0x00FF) - amt;
+            const B = (num & 0x0000FF) - amt;
+            
+            return `#${(
+                0x1000000 + 
+                (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 + 
+                (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 + 
+                (B < 255 ? B < 1 ? 0 : B : 255)
+            ).toString(16).slice(1)}`;
+        }
+        
+        // Инициализация
+        updateUI();
+        
+        // Добавляем стиль для анимации пульсации
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                from { transform: scale(1); }
+                to { transform: scale(1.1); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
